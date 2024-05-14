@@ -1,0 +1,56 @@
+npm i prisma -D --> instalamos prisma como dependencia de desenvolvimento 
+
+npx prisma init --> inicializar o prisma no vscode criando a pasta prisma 
+
+---------------------------------------------------------------------------
+
+docker com a imagem da bitnami/postgress --> usamos devido a seguranca que o postgress da bitnami valida
+
+ex: ele nao deixa criar user com senha padrao do postgress --> existem varias validacoes onde tras mais seguranca para aplicacao 
+
+------------------------------------   DOCKER COM POSTGRESS   -------------------------------------------
+
+variaveis de ambiente : 
+
+se passarmos essas variaveis de ambiente quando estamos criando o nosso container nos criamos logo um user para a aplicacao conseguir acessar o bando de dados 
+
+POSTGRESQL_USERNAME= docker --> criamos um user com o nome docker 
+
+POSTGRESQL_PASSWORD= DOCKER_FCCPD --> senha do user 
+
+POSTGRESS_DATABASE=  --> para criar um banco de dados 
+
+-p: ta direcionando para a porta 5431 --> ou seja, quando acessarmos a porta 5431 na maquina, nos esteramos acessando a porta 5432 dentro do container 
+
+-- nome do banco: api-FCCPD-pg
+
+Rodando o postgress da bitnami com o docker --> docker run --name api-FCCPD-pg -e POSTGRESQL_USERNAME=docker -e POSTGRESQL_PASSWORD=DOCKER_FCCPD -e POSTGRES_DATABASE=apiFCCPD -p 5431:5432 bitnami/postgresql
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+para fazer a conexao com o banco precisamos configurar o env com as variaveis de ambiente 
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+docker ps -a --> mostra todas os containers 
+
+rodando o container --> docker start api-FCCPD-pg
+
+parando o container --> docker stop api-FCCPD-pg
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+a cada mudanca no banco de dados executamos o seguinte comando :  npx prisma migrate dev --> cria as tabelas no nosso banco 
+
+assim criamos uma nova migration com as novas mudancas. dentro das migrations tem as tabelas sendo criadas com o sql. 
+
+ex: criamos a tabela user com o prisma, quando rodamos e criamos uma nova migration, criaremos uma migration com um codigo sql criando nossa tabela user dentro do nosso banco postgress
+
+------------------------------------------------------ docker compose --------------------------------------------------------------------------------------------
+
+quando uma pessoa fosse pegar esse codigo teria que executar isso: docker run --name api-FCCPD-pg -e POSTGRESQL_USERNAME=docker -e POSTGRESQL_PASSWORD=DOCKER_FCCPD -e POSTGRES_DATABASE=apiFCCPD -p 5431:5432 bitnami/postgresql
+para dar run no docker 
+
+por isso utilizamos o docker compose 
+
+agora para rodar o docker nos utilizamos o --> docker compose up -d --> ou seja, a pessoa nao precisa saber das variaveis de ambiente para rodar o docker, basta rodar o compose que já esta na aplicacao

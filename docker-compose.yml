@@ -1,0 +1,13 @@
+#docker run --name api-FCCPD-pg -e POSTGRESQL_USERNAME=docker -e POSTGRESQL_PASSWORD=DOCKER_FCCPD -e POSTGRES_DATABASE=apiFCCPD -p 5431:5432 bitnami/postgresql
+
+version: "3"
+
+services:
+  api-FCCPD-pg:
+    image: bitnami/postgresql
+    ports:
+      - 5431:5432
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=DOCKER_FCCPD
+      - POSTGRES_DATABASE=apiFCCPD
