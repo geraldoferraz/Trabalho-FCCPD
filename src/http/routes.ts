@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify"
 import { register, getUserById, getUserByEmail, getAllUsers, deleteUsers, updateUsers } from "./controller/register"
 import { workouts, getAllWorkoutsByUser, updateWorkouts, deleteWorkouts, searchWorkoutsByIdAndTrainingType } from "./controller/workouts"
-import { createWeight } from "./controller/weight";
+import { createWeight, deleteWeight, explorerFirstWeightRegister, explorerWeights, updateWeights } from "./controller/weight";
 
 const fastify = require('fastify')({ logger: true });
 
@@ -24,4 +24,8 @@ export async function appRoutes(app: FastifyInstance){
     //--------------------- WEIGHTS ----------------------------//
 
     app.post('/weights/:userId', createWeight)
+    app.put('/weights/:id', updateWeights)
+    app.get('/weights', explorerWeights)
+    app.get('/weights/:userId', explorerFirstWeightRegister)
+    app.delete('/weights/:id', deleteWeight)
 }

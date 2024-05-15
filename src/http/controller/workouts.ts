@@ -34,7 +34,7 @@ export async function workouts (request: FastifyRequest, response: FastifyReply)
             details
         })
 
-        response.send({ success: 'Workout criado com sucesso', data: result.workouts })
+        response.send({ success: 'New Workout successfully created', data: result.workouts })
     }catch(err){
         const message = (err as Error).message;
         response.status(400).send({ success: false, error: message });
@@ -63,8 +63,6 @@ export async function updateWorkouts(request: FastifyRequest, response: FastifyR
 
     const { training, cardio_minutes, details } = workoutBodySchema.parse(request.body)
 
-    console.log('details aqui: ' ,details)
-
     try {
         const workoutUseCase = makeChangesWorkoutUseCase();
         const result = await workoutUseCase.update({ id, training, cardio_minutes, details });
@@ -84,7 +82,7 @@ export async function deleteWorkouts(request: FastifyRequest, response: FastifyR
         const workoutUseCase = makeDeleteWorkoutUseCase();
         const result = await workoutUseCase.delete({ id });
 
-        response.status(200).send('Workout deletado com sucesso!')
+        response.status(200).send('Workout record successfully deleted!')
     } catch (err) {
         const message = (err as Error).message;
         response.status(500).send({ success: false, error: message });

@@ -19,9 +19,8 @@ export class PrismaWorkoutsRepository implements WorkoutsRepository {
         }
 
         const workouts = await this.prisma.workouts.findMany({
-            where: {
-                userId,
-            }
+            where: {userId},
+            orderBy: { created_at: 'desc' }
         });
 
         return workouts

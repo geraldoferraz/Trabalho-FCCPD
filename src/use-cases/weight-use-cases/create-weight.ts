@@ -7,6 +7,10 @@ export interface CreateWeightUseCaseRequest {
   targetWeight?: number;
 }
 
+export interface FirstWeightRegisterRequest {
+    userId: string;
+}
+
 interface RegisterUseCaseResponse {
     weight: Weight;
     message: string;  // Incluir a propriedade 'message' para armazenar mensagens de feedback
@@ -41,4 +45,26 @@ export class CreateWeightUseCase {
 
     return { weight, message: successMessage };
   }
+
+    async executeExplorerForAllWeights(){
+
+        const weights = await this.weightRepository.findAll();
+
+        if(!weights){
+            throw new Error('No weights register found.')
+        }
+
+        return weights;
+    }
+
+    async executeExplorerForFirstWeightRegister({ userId }:FirstWeightRegisterRequest){
+
+        const weight = await this.weightRepository.findFirstWeightRegister(userId);
+
+        if(!weight){
+            throw new Error('No weights register found.')
+        }
+
+        return weight;
+}
 }
