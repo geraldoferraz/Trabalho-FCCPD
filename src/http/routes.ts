@@ -25,7 +25,7 @@ export async function appRoutes(app: FastifyInstance){
 
     app.post('/weights/:userId', createWeight)
     app.put('/weights/:id', updateWeights)
-    app.get('/weights', explorerWeights)
-    app.get('/weights/:userId', explorerFirstWeightRegister)
+    app.get('/weights/:userId', explorerWeights)
+    app.get('/weight/:userId', explorerFirstWeightRegister)
     app.delete('/weights/:id', deleteWeight)
 }

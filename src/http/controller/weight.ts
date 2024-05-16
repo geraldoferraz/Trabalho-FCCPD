@@ -37,11 +37,17 @@ export async function createWeight(request: FastifyRequest, response: FastifyRep
 
 export async function explorerWeights(request: FastifyRequest, response: FastifyReply) {
 
+    const weightIdBodySchema = z.object({
+        userId: z.string()
+    });
+
+    const { userId } = weightIdBodySchema.parse(request.params);
+
     try {
         const weightUseCase = makeWeightUseCase();
-        const result = await weightUseCase.executeExplorerForAllWeights()
+        const results = await weightUseCase.executeExplorerForAllWeights({ userId })
 
-        response.status(200).send(result)
+        response.status(200).send(results)
     } catch (err) {
         const message = (err as Error).message;
         response.status(400).send({ success: false, error: message });
@@ -60,7 +66,7 @@ export async function explorerFirstWeightRegister(request: FastifyRequest, respo
         const weightUseCase = makeWeightUseCase();
         const result = await weightUseCase.executeExplorerForFirstWeightRegister({userId})
 
-        response.status(200).send(result)
+        response.status(200).send(result.currentWeight.toNumber())
     } catch (err) {
         const message = (err as Error).message;
         response.status(400).send({ success: false, error: message });

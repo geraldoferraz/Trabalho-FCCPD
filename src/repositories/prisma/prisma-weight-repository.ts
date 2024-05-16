@@ -39,8 +39,9 @@ export class PrismaWeightRepository implements WeightRepository {
         return weight
     }
 
-    async findAll(){
+    async findAllByUser(userId: string){
         const allWeights = await prisma.weight.findMany({
+            where: { userId: userId },
             orderBy: {recorded_at: 'desc'}
         })
         return allWeights

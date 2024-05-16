@@ -4,7 +4,7 @@ export interface WeightRepository {
     create(data: Prisma.WeightCreateInput): Promise<Weight>;
     findLastByUserId(userId: string): Promise<Weight | null>;
     update(where: Prisma.WeightWhereUniqueInput, data: Prisma.WeightUpdateInput): Promise<Weight>;
-    findAll(): Promise<Weight[] | null>;
+    findAllByUser(userId: string): Promise<Weight[] | null>;
     findFirstWeightRegister(userId: string): Promise<Weight | null>
     delete(id: string): Promise<Weight | null>
 }

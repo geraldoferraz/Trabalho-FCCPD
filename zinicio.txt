@@ -1,6 +1,22 @@
+npm i fastify 
+
+npm i dotenv
+
+npm i zod --> validacao dos dados 
+
 npm i prisma -D --> instalamos prisma como dependencia de desenvolvimento 
 
 npx prisma init --> inicializar o prisma no vscode criando a pasta prisma 
+
+npx prisma generate 
+
+npx prisma migrate dev 
+
+npx prisma studio --. rodar o banco na web --`. so rodar quando o server tiver rodando
+
+docker compose up -d --rodar o docker 
+
+npm run dev
 
 ---------------------------------------------------------------------------
 
