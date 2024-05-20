@@ -8,60 +8,48 @@ datasource db {
 }
 
 enum TrainingType {
-  Peito
-  Triceps
-  Costas
-  Biceps
-  Ombro
-  Perna
-  Posterior_de_coxa
-  Gluteo
-  DayOff
+  Strength
+  Cardio
 }
 
-//o @id garante que aquele atributo é o id e ele sera uma primary key da tabela user
-
 model User {
-  id          String    @id @default(uuid())
-  name        String
-  email       String    @unique
+  id           String    @id @default(uuid())
+  name         String
+  email        String    @unique
   password_hash String
-  age         Int
-  created_at  DateTime  @default(now())
-  workouts    Workouts[]
-  weights     Weight[]
+  age          Int
+  created_at   DateTime  @default(now())
+  workouts     Workouts[]
+  weights      Weight[]
+  waters       Water[]
 }
 
 model Workouts {
-  id            String          @id @default(uuid())
-  userId        String          // Chave estrangeira
-  user          User            @relation(fields: [userId], references: [id])
-  training      TrainingType    @default(DayOff)
-  cardio_minutes Int            @default(0)
-  details       String?
-  created_at    DateTime        @default(now())
-  loadProgressions LoadProgression[]
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  training    TrainingType
+  name        String
+  duration    Int       @default(0)
+  description String?
+  created_at  DateTime  @default(now())
 }
-
-//Cada Workout está diretamente associado a um User através de userId.
 
 model Weight {
-  id          String    @id @default(uuid())
-  userId      String    //Chave estrangeira
-  user        User      @relation(fields: [userId], references: [id]) //vai ajudar nas consultas futuras, pois mostra a relacao do atributo com outra tabela 
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
   currentWeight Decimal
-  targetWeight Decimal?
-  recorded_at DateTime  @default(now())
+  targetWeight  Decimal?
+  recorded_at   DateTime @default(now())
 }
 
-model LoadProgression {
-  id             String    @id @default(uuid())
-  workoutDetailId String
-  workoutDetail  Workouts  @relation(fields: [workoutDetailId], references: [id])
-  exercise       String    // Nome do exercício realizado
-  date           DateTime  @default(now())
-  currentLoad    Decimal   // Carga usada no último treino
-  goalLoad       Decimal?  // Próximo objetivo de carga (opcional)
+model Water {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  amount    Decimal
+  createdAt DateTime @default(now())
 }
 
 

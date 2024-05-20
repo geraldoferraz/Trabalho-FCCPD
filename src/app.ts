@@ -10,6 +10,14 @@ export const app = fastify()
 
 app.register(appRoutes)
 
+app.addHook('preHandler', (request, reply, done) => {
+    reply.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    reply.header('Access-Control-Allow-Credentials', true);
+    done();
+});
+
 app.setErrorHandler((error, request, response) => {//tratando erros globalmente 
     if(error instanceof ZodError){
         return response

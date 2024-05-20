@@ -8,21 +8,15 @@ export async function workouts (request: FastifyRequest, response: FastifyReply)
     const workoutBodySchema = z.object({
         userId: z.string(),
         training: z.enum([
-            'Peito',
-            'Triceps',
-            'Costas',
-            'Biceps',
-            'Ombro',
-            'Perna',
-            'Posterior_de_coxa',
-            'Gluteo',
-            'DayOff'
+            'Strength',
+            'Cardio'
         ]),
-        cardio_minutes: z.number(),
-        details: z.string().optional()
+        name: z.string(),
+        duration: z.number(),
+        description: z.string().optional()
     })
 
-    const { userId, training, cardio_minutes, details } = workoutBodySchema.parse(request.body)
+    const { userId, training, name, duration, description } = workoutBodySchema.parse(request.body)
 
     try{
         const workoutUseCase = makeWorkoutUseCase()
@@ -30,8 +24,9 @@ export async function workouts (request: FastifyRequest, response: FastifyReply)
         const result = await workoutUseCase.execute({ 
             userId,
             training,
-            cardio_minutes, 
-            details
+            name,
+            duration, 
+            description
         })
 
         response.send({ success: 'New Workout successfully created', data: result.workouts })
@@ -47,25 +42,19 @@ export async function updateWorkouts(request: FastifyRequest, response: FastifyR
 
     const workoutBodySchema = z.object({
         training: z.enum([
-            'Peito',
-            'Triceps',
-            'Costas',
-            'Biceps',
-            'Ombro',
-            'Perna',
-            'Posterior_de_coxa',
-            'Gluteo',
-            'DayOff'
+            'Strength',
+            'Cardio'
         ]).optional(),
-        cardio_minutes: z.number().min(0).optional(),
-        details: z.string().optional(),
+        name: z.string(),
+        duration: z.number().min(0).optional(),
+        description: z.string().optional(),
     });
 
-    const { training, cardio_minutes, details } = workoutBodySchema.parse(request.body)
+    const { training, name, duration, description } = workoutBodySchema.parse(request.body)
 
     try {
         const workoutUseCase = makeChangesWorkoutUseCase();
-        const result = await workoutUseCase.update({ id, training, cardio_minutes, details });
+        const result = await workoutUseCase.update({ id, training, name, duration, description });
 
         response.status(200).send(result)
     } catch (err) {
@@ -118,16 +107,9 @@ export async function searchWorkoutsByIdAndTrainingType(request: FastifyRequest,
     const trainingTypeParamSchema =
       z.object({
         trainingType: z.enum([
-          "Peito",
-          "Triceps",
-          "Costas",
-          "Biceps",
-          "Ombro",
-          "Perna",
-          "Posterior_de_coxa",
-          "Gluteo",
-          "DayOff",
-        ]),
+            'Strength',
+            'Cardio'
+        ]).optional(),
       });
   
     const { userId } = userIdParamSchema.parse(request.params);

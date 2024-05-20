@@ -6,9 +6,10 @@ import { TrainingType, User, Workouts } from "@prisma/client";
 
 interface WorkoutsUseCaseRequest {
     userId: string;              
-    training: TrainingType;     
-    cardio_minutes: number;      
-    details?: string;            
+    training: TrainingType;   
+    name: string;  
+    duration: number;      
+    description?: string;            
 }
 
 interface WorkoutsUseCaseResponse {
@@ -20,15 +21,16 @@ export class WorkoutsUseCase {
     constructor(private workoutsRepository: WorkoutsRepository){
     }
 
-    async execute({ userId, training, cardio_minutes, details}: WorkoutsUseCaseRequest): Promise<WorkoutsUseCaseResponse> {
+    async execute({ userId, training, name, duration, description}: WorkoutsUseCaseRequest): Promise<WorkoutsUseCaseResponse> {
     
        const workouts = await this.workoutsRepository.create({
             user: {
                 connect: { id: userId }
             },
             training,
-            cardio_minutes,
-            details
+            duration,
+            name,
+            description
         })
 
         return { workouts }

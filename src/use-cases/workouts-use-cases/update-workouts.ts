@@ -6,9 +6,10 @@ import { Prisma, TrainingType, User, Workouts } from "@prisma/client";
 
 interface UpdateWorkoutsUseCaseRequest {
     id: string;                   
-    training?: TrainingType;      
-    cardio_minutes?: number;      
-    details?: string;             
+    training?: TrainingType;   
+    name: string;   
+    duration?: number;      
+    description?: string;             
 }
 
 interface UpdateWorkoutsUseCaseResponse {
@@ -20,18 +21,21 @@ export class WorkoutsChangesUseCase {
     constructor(private workoutsRepository: WorkoutsRepository){
     }
 
-    async update({ id, training, cardio_minutes, details }: UpdateWorkoutsUseCaseRequest): Promise<UpdateWorkoutsUseCaseResponse> {
+    async update({ id, training, name, duration, description }: UpdateWorkoutsUseCaseRequest): Promise<UpdateWorkoutsUseCaseResponse> {
 
         const data: Prisma.WorkoutsUpdateInput = {};
     
         if (training !== undefined) {
             data.training = training;
         }
-        if (cardio_minutes !== undefined) {
-            data.cardio_minutes = cardio_minutes;
+        if (name !== undefined) {
+            data.name = name;
         }
-        if (details !== undefined) {
-            data.details = details;
+        if (duration !== undefined) {
+            data.duration = duration;
+        }
+        if (description !== undefined) {
+            data.description = description;
         }
     
         const workouts = await this.workoutsRepository.update(
