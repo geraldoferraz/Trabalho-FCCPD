@@ -115,5 +115,3 @@ export async function deleteWeight(request: FastifyRequest, response: FastifyRep
         response.status(500).send({ success: false, error: message });
     }
 }
-
-makeWeightDeleteUseCase

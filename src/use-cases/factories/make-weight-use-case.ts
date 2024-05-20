@@ -1,5 +1,5 @@
 import { CreateWeightUseCase } from "../weight-use-cases/create-weight"
-import { PrismaWeightRepository } from '../../repositories/prisma/prisma-weight-repository'
+import { PrismaWeightRepository } from '../../repositories/prisma/prisma-Weight-repository'
 import { WeightChangesUseCase } from "../weight-use-cases/update-weight"
 import { WeightDeleteUseCase } from "../weight-use-cases/delete-weight"
 
