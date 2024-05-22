@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { FastifyRequest, FastifyReply } from "fastify";
-import { makeDeleteWaterUseCase, makeWaterChangesUseCase, makeWaterUseCase } from "../../use-cases/factories/make-water-use-case";
+import { makeCalculateWaterIntakeUseCase, makeDeleteWaterUseCase, makeWaterChangesUseCase, makeWaterUseCase } from "../../use-cases/factories/make-water-use-case";
 import { makeWeightUpdateUseCase } from "../../use-cases/factories/make-weight-use-case";
 import { Decimal } from "@prisma/client/runtime/library";
 
@@ -113,3 +113,21 @@ export async function updateWater(request: FastifyRequest, response: FastifyRepl
         response.status(500).send({ success: false, error: message });
     }
 }
+
+export async function calculateWaterIntake(request: FastifyRequest, response: FastifyReply) {
+    const weightIdBodySchema = z.object({
+      userId: z.string(),
+    });
+  
+    const { userId } = weightIdBodySchema.parse(request.params);
+  
+    try {
+      const calculateWaterIntakeUseCase = makeCalculateWaterIntakeUseCase();
+      const waterIntake = await calculateWaterIntakeUseCase.execute({ userId });
+  
+      response.status(200).send({ waterIntake });
+    } catch (err) {
+      const message = (err as Error).message;
+      response.status(400).send({ success: false, error: message });
+    }
+  }

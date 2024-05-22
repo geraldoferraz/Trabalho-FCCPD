@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify"
 import { register, getUserById, getUserByEmail, getAllUsers, deleteUsers, updateUsers } from "./controller/register"
 import { workouts, getAllWorkoutsByUser, updateWorkouts, deleteWorkouts, searchWorkoutsByIdAndTrainingType } from "./controller/workouts"
 import { createWeight, deleteWeight, explorerFirstWeightRegister, explorerWeights, updateWeights } from "./controller/weight";
-import { createWater, deleteWater, explorerWaters, updateWater } from "./controller/water";
+import { calculateWaterIntake, createWater, deleteWater, explorerWaters, updateWater } from "./controller/water";
 
 const fastify = require('fastify')({ logger: true });
 
@@ -34,6 +34,7 @@ export async function appRoutes(app: FastifyInstance){
 
     app.post('/water/:userId', createWater)
     app.put('/water/:id', updateWater)
-    app.get('/water/:userId', explorerWaters)
+    app.get('/waters/:userId', explorerWaters)
+    app.get('/water/:userId', calculateWaterIntake);
     app.delete('/water/:id', deleteWater)
 }
