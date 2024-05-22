@@ -35,7 +35,7 @@ export async function register (request: FastifyRequest, response: FastifyReply)
         response.send('Usuário criado com sucesso!').status(200);
 
     }catch(err){
-        throw err
+        response.send('Email already exists. Try with another email.').status(400)
     }
 }
 
