@@ -26,7 +26,12 @@ services:
       - .:/app
     ports:
       - "5555:5555"
-    # command: sh -c "npx prisma migrate deploy && npx prisma generate"
+    command:
+      [
+        "sh",
+        "-c",
+        "npx prisma migrate deploy && npx prisma generate && npx prisma studio",
+      ]
 
   app:
     build:
@@ -37,11 +42,13 @@ services:
     environment:
       DATABASE_URL: postgresql://docker:DOCKER_FCCPD@postgres:5432/apiFCCPD
     depends_on:
+      - postgres
       - prisma
     volumes:
       - .:/app
       - /app/node_modules
     restart: always
+    command: ["npm", "run", "dev"]
 
 volumes:
   postgres-data:
