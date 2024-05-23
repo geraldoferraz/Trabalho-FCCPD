@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:16-alpine
 
 WORKDIR /app
 
@@ -13,5 +13,7 @@ RUN npm install @prisma/client prisma dotenv
 RUN npx prisma generate
 
 EXPOSE 3333
+EXPOSE 5555
 
-CMD ["npm", "start"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
+
