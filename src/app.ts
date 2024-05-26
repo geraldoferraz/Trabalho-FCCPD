@@ -3,19 +3,17 @@ import { PrismaClient} from '@prisma/client'
 import { appRoutes } from "./http/routes";
 import { env } from "./env";
 import { ZodError } from "zod";
-
+import cors from '@fastify/cors'
 
 const prisma = new PrismaClient() //criando conexao com o banco do prisma 
 export const app = fastify()
 
 app.register(appRoutes)
 
-app.addHook('preHandler', (request, reply, done) => {
-    reply.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-    reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    reply.header('Access-Control-Allow-Credentials', true);
-    done();
+app.register(cors, {
+    origin: ["http://localhost:3000"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"]
 });
 
 app.setErrorHandler((error, request, response) => {//tratando erros globalmente 
