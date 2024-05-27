@@ -6,7 +6,7 @@ async function main() {
   const user = await prisma.user.create({
     data: {
       name: "John Doe",
-      email: "john.doe2@example.com",
+      email: "john.doe3@example.com",
       password_hash: "$2a$06$Lu15N0/uTXeC8VLouj.Ep.nC2ZS4ZJ/TDM/ZM8t81jsqW8.nqITAA",
       age: 30,
     },
@@ -15,7 +15,7 @@ async function main() {
   const user2 = await prisma.user.create({
     data: {
       name: "Igor Amaral",
-      email: "igoramaral@example.com",
+      email: "igorA@example.com",
       password_hash: "$2a$06$Lu15N0/uTXeC8VLouj.Ep.nC2ZS4ZJ/TDM/ZM8t81jsqW8.nqITCC",
       age: 21,
     },
@@ -24,7 +24,7 @@ async function main() {
   const user3 = await prisma.user.create({
     data: {
       name: "Luis Adolfo",
-      email: "LuisAdolfo@example.com",
+      email: "LuisA@example.com",
       password_hash: "$2a$06$Lu15N0/uTXeC8VLouj.Ep.nC2ZS4ZJ/TDM/ZM8t81jsqW8.nqI1ER",
       age: 24,
     },
@@ -33,7 +33,7 @@ async function main() {
   const user4 = await prisma.user.create({
     data: {
       name: "Enzo de Barros",
-      email: "EnzoBarros@example.com",
+      email: "EnzoB@example.com",
       password_hash: "$2a$06$Lu15N0/uTXeC8VLouj.Ep.nC2ZS4ZJ/TDM/ZM8t81jsqW8.nqIT90",
       age: 20,
     },
@@ -42,7 +42,7 @@ async function main() {
   const user5 = await prisma.user.create({
     data: {
       name: "Geraldo Ferraz",
-      email: "geraldoferraz@example.com",
+      email: "geraldoferraz78@example.com",
       password_hash: "$2a$06$Lu15N0/uTXeC8VLouj.Ep.nC2ZS4ZJ/TDM/ZM8t81jsqW8.nqITGF",
       age: 20,
     },
@@ -51,7 +51,7 @@ async function main() {
   const user6 = await prisma.user.create({
     data: {
       name: "Andre luiz",
-      email: "andreluiz@example.com",
+      email: "andreluiz12@example.com",
       password_hash: "$2a$06$Lu15N0/uTXeC8VLouj.Ep.nC2ZS4ZJ/TDM/ZM8t81jsqW8.nqITPP",
       age: 20,
     },

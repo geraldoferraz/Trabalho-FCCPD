@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   postgres:
-    image: postgres:13
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
     container_name: postgres-container
     restart: always
     ports:
@@ -28,7 +30,6 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    restart: always
 
 volumes:
   postgres-data:

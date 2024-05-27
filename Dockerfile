@@ -12,8 +12,10 @@ RUN npm install @prisma/client prisma dotenv
 
 RUN npx prisma generate
 
+COPY prisma/seed.ts ./prisma/
+
 EXPOSE 3333
 EXPOSE 5555
 
-CMD ["sh", "-c", "npx prisma migrate deploy && npm run dev && npx prisma studio && npm run seed"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run seed && npm run dev"]
 
