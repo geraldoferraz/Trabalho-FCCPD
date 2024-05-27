@@ -20,32 +20,38 @@ interface GetRegisterUseCaseRequestWithEmail {
 }
 
 interface RegisterUseCaseResponse {
-    user: User | undefined | null
+    user: {
+        id: string;
+    };
 }
+
 
 export class RegisterUseCase {
 
     constructor(private getUsersRepository: GetUsersRepository){
     }
 
-    async execute({ name, email, password, age}: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
+    async execute({ name, email, password, age }: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
+        const password_hash = await hash(password, 6); // Fazendo o hashing 
 
-        const password_hash = await hash(password, 6); //fazendo o hashing 
-    
-        const EmailExisting = await this.getUsersRepository.findByEmail(email)
+        const emailExisting = await this.getUsersRepository.findByEmail(email);
 
-        if(EmailExisting){
+        if (emailExisting) {
             throw new Error('Email Already Exists');
         }
-    
-       const user = await this.getUsersRepository.create({
+
+        const user = await this.getUsersRepository.create({
             name,
             email,
             password_hash,
             age
-        })
+        });
 
-        return { user }
+        return {
+            user: {
+                id: user.id,
+            }
+        };
     }
     
     async executeExplorerById({ id }: GetRegisterUseCaseRequest) { //aqui nos temos o metodo execute que cria um user 

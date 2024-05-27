@@ -7,7 +7,7 @@ async function main() {
     data: {
       name: "John Doe",
       email: "john.doe2@example.com",
-      password_hash: "hashed_password",
+      password_hash: "$2a$06$Lu15N0/uTXeC8VLouj.Ep.nC2ZS4ZJ/TDM/ZM8t81jsqW8.nqITAA",
       age: 30,
     },
   });
@@ -16,7 +16,7 @@ async function main() {
     data: {
       name: "Igor Amaral",
       email: "igoramaral@example.com",
-      password_hash: "hashed_password",
+      password_hash: "$2a$06$Lu15N0/uTXeC8VLouj.Ep.nC2ZS4ZJ/TDM/ZM8t81jsqW8.nqITCC",
       age: 21,
     },
   });
@@ -25,7 +25,7 @@ async function main() {
     data: {
       name: "Luis Adolfo",
       email: "LuisAdolfo@example.com",
-      password_hash: "hashed_password",
+      password_hash: "$2a$06$Lu15N0/uTXeC8VLouj.Ep.nC2ZS4ZJ/TDM/ZM8t81jsqW8.nqI1ER",
       age: 24,
     },
   });
@@ -34,7 +34,7 @@ async function main() {
     data: {
       name: "Enzo de Barros",
       email: "EnzoBarros@example.com",
-      password_hash: "hashed_password",
+      password_hash: "$2a$06$Lu15N0/uTXeC8VLouj.Ep.nC2ZS4ZJ/TDM/ZM8t81jsqW8.nqIT90",
       age: 20,
     },
   });
@@ -43,7 +43,7 @@ async function main() {
     data: {
       name: "Geraldo Ferraz",
       email: "geraldoferraz@example.com",
-      password_hash: "hashed_password",
+      password_hash: "$2a$06$Lu15N0/uTXeC8VLouj.Ep.nC2ZS4ZJ/TDM/ZM8t81jsqW8.nqITGF",
       age: 20,
     },
   });
@@ -52,7 +52,7 @@ async function main() {
     data: {
       name: "Andre luiz",
       email: "andreluiz@example.com",
-      password_hash: "hashed_password",
+      password_hash: "$2a$06$Lu15N0/uTXeC8VLouj.Ep.nC2ZS4ZJ/TDM/ZM8t81jsqW8.nqITPP",
       age: 20,
     },
   });

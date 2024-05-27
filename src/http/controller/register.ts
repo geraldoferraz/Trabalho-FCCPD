@@ -12,32 +12,33 @@ interface emailParams {
     email: string
 }
 
-export async function register (request: FastifyRequest, response: FastifyReply) {
+export async function register(request: FastifyRequest, response: FastifyReply) {
     const registerBodySchema = z.object({
         name: z.string(),
         email: z.string().email(),
         password: z.string().min(5),
         age: z.number(),
-    })
+    });
 
-    const { name, email, password, age } = registerBodySchema.parse(request.body)
+    const { name, email, password, age } = registerBodySchema.parse(request.body);
 
-    try{
-        const registerUseCase = makeRegisterUseCase()
+    try {
+        const registerUseCase = makeRegisterUseCase();
 
-        await registerUseCase.execute({ 
-            name, 
+        const { user } = await registerUseCase.execute({
+            name,
             email,
             password,
             age,
-        })
+        });
 
-        response.send('Usuário criado com sucesso!').status(200);
+        response.status(200).send( user.id );
 
-    }catch(err){
-        response.send('Email already exists. Try with another email.').status(400)
+    } catch (err) {
+        response.status(400).send({ message: 'Email already exists. Try with another email.' });
     }
 }
+
 
 export async function getUserById (request: FastifyRequest<{ Params: Params }>, response: FastifyReply) {
         const { id }  = request.params; 
