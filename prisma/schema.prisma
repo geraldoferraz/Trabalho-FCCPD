@@ -52,17 +52,3 @@ model Water {
   createdAt DateTime @default(now())
 }
 
-
-// Registro do Treino:
-// O usuário começa realizando um treino de peito, incluindo exercícios como supino. Após o treino, ele acessa o sistema para registrar as atividades realizadas.
-
-// Entrada de Dados:
-
-// O usuário entra na interface do sistema onde ele pode adicionar um novo treino.
-// Ele seleciona o tipo de treino (por exemplo, Peito) e adiciona detalhes como a duração do cardio e observações gerais sobre o treino.
-// Ele submete as informações, que são salvas na tabela Workouts.
-// Registro de Progressão de Carga:
-
-// Após registrar o treino, o usuário procede para registrar a progressão de carga para o exercício de supino.
-// Ele especifica o exercício realizado ("Supino"), a carga usada no treino atual (35kg), a carga usada no último treino (30kg), e, opcionalmente, estabelece um novo objetivo de carga (40kg).
-// Essas informações são submetidas e salvas na tabela LoadProgression, associadas ao treino específico que ele acabou de registrar.
