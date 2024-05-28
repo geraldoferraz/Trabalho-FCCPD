@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { FastifyRequest, FastifyReply } from "fastify";
 import { PrismaWorkoutsRepository } from "../../repositories/prisma/prisma-Workouts-Repository";
-import { makeChangesWorkoutUseCase, makeDeleteWorkoutUseCase, makeSearchWorkoutByUseCase, makeSearchWorkoutUseCase, makeWorkoutUseCase } from "../../use-cases/factories/make-workout-use-case";
+import { makeChangesWorkoutUseCase, makeDeleteWorkoutUseCase, makeSearchWorkoutUseCase, makeWorkoutUseCase } from "../../use-cases/factories/make-workout-use-case";
 import { SearchWorkoutUseCase } from "../../use-cases/workouts-use-cases/searchWorkouts";
 
 export async function workouts (request: FastifyRequest, response: FastifyReply) {
@@ -97,35 +97,3 @@ export async function getAllWorkoutsByUser(request: FastifyRequest, response: Fa
         });
     }
 }
-
-export async function searchWorkoutsByIdAndTrainingType(request: FastifyRequest, response: FastifyReply) {
-
-    const userIdParamSchema = z.object({
-      userId: z.string(),
-    });
-  
-    const trainingTypeParamSchema =
-      z.object({
-        trainingType: z.enum([
-            'Strength',
-            'Cardio'
-        ]).optional(),
-      });
-  
-    const { userId } = userIdParamSchema.parse(request.params);
-    const { trainingType } = trainingTypeParamSchema.parse(request.params);
-
-  
-    try {
-      const searchWorkoutUseCase = makeSearchWorkoutByUseCase();
-  
-      const workouts = await searchWorkoutUseCase.execute({ userId, trainingType });
-  
-      response.status(200).send(workouts);
-    } catch (error) {
-      response.status(404).send({
-        message: "Workouts Not Found.",
-      });
-    }
-  }
-  

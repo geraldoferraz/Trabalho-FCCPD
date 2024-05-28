@@ -18,4 +18,3 @@ EXPOSE 3333
 EXPOSE 5555
 
 CMD ["sh", "-c", "npx prisma migrate deploy && npm run seed && npm run dev"]
-

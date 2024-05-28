@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify"
-import { register, getUserById, getUserByEmail, getAllUsers, deleteUsers, updateUsers } from "./controller/register"
-import { workouts, getAllWorkoutsByUser, updateWorkouts, deleteWorkouts, searchWorkoutsByIdAndTrainingType } from "./controller/workouts"
+import { register, getUserById, getUserByEmail, getAllUsers, deleteUsers, updateUsers, getUserRecordsCountController, getUserRecordsWithDetails } from "./controller/register"
+import { workouts, getAllWorkoutsByUser, updateWorkouts, deleteWorkouts } from "./controller/workouts"
 import { createWeight, deleteWeight, explorerFirstWeightRegister, explorerWeights, updateWeights } from "./controller/weight";
 import { calculateWaterIntake, createWater, deleteWater, explorerWaters, updateWater } from "./controller/water";
 
@@ -11,6 +11,8 @@ export async function appRoutes(app: FastifyInstance){
     app.get('/users/id/:id', getUserById)
     app.get('/users/email/:email', getUserByEmail)
     app.get('/users', getAllUsers)
+    app.get('/users/:userId/records-count', getUserRecordsCountController)
+    app.get('/users/:userId/records-details', getUserRecordsWithDetails)
     app.put('/users/:id', updateUsers)
     app.delete('/users/:id', deleteUsers)
 
@@ -18,7 +20,6 @@ export async function appRoutes(app: FastifyInstance){
 
     app.post('/workouts', workouts)
     app.get('/workouts/:userId', getAllWorkoutsByUser)
-    app.get('/workouts/:userId/:trainingType', searchWorkoutsByIdAndTrainingType)
     app.put('/workouts/:id', updateWorkouts)
     app.delete('/workouts/:id', deleteWorkouts)
 

@@ -72,4 +72,50 @@ export class PrismaGetUsersRepository implements GetUsersRepository{ //tudo oque
         return user
     }
 
+    async findUserRecordsCount(userId: string) {
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            include: {
+                _count: {
+                    select: {
+                        workouts: true,
+                        weights: true,
+                        waters: true,
+                    },
+                },
+            },
+        });
+
+        if (!user) {
+            return null;
+        }
+
+        return {
+            workoutsCount: user._count.workouts,
+            weightsCount: user._count.weights,
+            watersCount: user._count.waters,
+        };
+    }
+
+    async findUserWorkoutsWithDetails(userId: string){
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            include: {
+                workouts: true,
+                weights: true,
+                waters: true,
+            },
+        });
+
+        if (!user) {
+            return null;
+        }
+
+        return {
+            workouts: user.workouts,
+            weights: user.weights,
+            waters: user.waters,
+        };
+    }
+
 }

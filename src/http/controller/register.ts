@@ -2,7 +2,7 @@ import { z } from "zod";
 import { FastifyRequest, FastifyReply } from "fastify";
 import { PrismaGetUsersRepository } from "../../repositories/prisma/prisma-Users-Repository";
 import { RegisterUseCase } from "../../use-cases/user-use-cases/register";
-import { makeDeleteRegisterUseCase, makeRegisterUseCase, makeUpdateRegisterUseCase } from "../../use-cases/factories/make-register-use-case";
+import { makeDeleteRegisterUseCase, makeGetUserRecordsCountUseCase, makeGetUserWorkoutsWithDetailsUseCase, makeRegisterUseCase, makeUpdateRegisterUseCase } from "../../use-cases/factories/make-register-use-case";
 
 interface Params {
     id: string
@@ -38,7 +38,6 @@ export async function register(request: FastifyRequest, response: FastifyReply) 
         response.status(400).send({ message: 'Email already exists. Try with another email.' });
     }
 }
-
 
 export async function getUserById (request: FastifyRequest<{ Params: Params }>, response: FastifyReply) {
         const { id }  = request.params; 
@@ -120,5 +119,47 @@ export async function updateUsers(request: FastifyRequest, response: FastifyRepl
     } catch (err) {
         const message = (err as Error).message;
         response.status(500).send({ success: false, error: message });
+    }
+}
+
+export async function getUserRecordsCountController(request: FastifyRequest, response: FastifyReply) {
+    const userIdParamSchema = z.object({
+        userId: z.string(),
+    });
+
+    try {
+        const { userId } = userIdParamSchema.parse(request.params);
+
+        const getUserRecordsCountUseCase = makeGetUserRecordsCountUseCase();
+
+        const userRecordsCount = await getUserRecordsCountUseCase.execute({ userId });
+
+        response.status(200).send({ "User records": userRecordsCount });
+    } catch (error) {
+        console.error('Error in getUserRecordsCountController:', error);
+        response.status(500).send({
+            success: false,
+        });
+    }
+}
+
+export async function getUserRecordsWithDetails(request: FastifyRequest, response: FastifyReply) {
+    const userIdParamSchema = z.object({
+        userId: z.string(),
+    });
+
+    try {
+        const { userId } = userIdParamSchema.parse(request.params);
+
+        const getUserWorkoutsWithDetailsUseCase = makeGetUserWorkoutsWithDetailsUseCase();
+
+        const userWorkoutsWithDetails = await getUserWorkoutsWithDetailsUseCase.execute({ userId });
+
+        response.status(200).send({ success: true, data: userWorkoutsWithDetails });
+    } catch (error) {
+        console.error('Error in getUserWorkoutsWithDetailsController:', error);
+        response.status(500).send({
+            success: false,
+        });
     }
 }

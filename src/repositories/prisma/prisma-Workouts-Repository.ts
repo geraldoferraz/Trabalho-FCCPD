@@ -26,16 +26,6 @@ export class PrismaWorkoutsRepository implements WorkoutsRepository {
         return workouts
     }
 
-    async findAllByTraining(userId: string, trainingType: TrainingType) {
-
-        return await prisma.workouts.findMany({
-          where: {
-            userId,
-            training: trainingType,
-          }
-        });
-      }
-
     async create(data: Prisma.WorkoutsCreateInput){
         const workout = await prisma.workouts.create({
             data,
