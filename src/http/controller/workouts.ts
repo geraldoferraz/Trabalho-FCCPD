@@ -29,7 +29,7 @@ export async function workouts (request: FastifyRequest, response: FastifyReply)
             description
         })
 
-        response.send({ success: 'New Workout successfully created', data: result.workouts })
+        response.send({ workout : result.workouts })
     }catch(err){
         const message = (err as Error).message;
         response.status(400).send({ success: false, error: message });
